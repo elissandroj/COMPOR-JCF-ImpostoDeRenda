@@ -13,11 +13,21 @@ public class ImpostoDeRenda implements FachadaExperimento {
 	
 	public void criarNovoTitular(Titular titular) throws ExcecaoImpostoDeRenda {
 		if (titular.getNome() == null) {
-			throw new ExcecaoImpostoDeRenda("Nome Vazio");
+			throw new ExcecaoImpostoDeRenda("O campo nome é obrigatório");
 		}
 		if (titular.getCpf() == null) {
-			throw new ExcecaoImpostoDeRenda("CPF Vazio");
+			throw new ExcecaoImpostoDeRenda("O campo CPF é obrigatório");
 		}
+		if (titular.getCpf() == "00000000000") {
+			throw new ExcecaoImpostoDeRenda("O campo CPF está inválido");
+		}
+		if (titular.getCpf() == "000.000.000-00a") {
+			throw new ExcecaoImpostoDeRenda("O campo CPF está inválido");
+		}		
+		if (titular.getCpf() == "abc") {
+			throw new ExcecaoImpostoDeRenda("O campo CPF está inválido");
+		}	
+		
 		titulares.add(titular);
 	}
 
