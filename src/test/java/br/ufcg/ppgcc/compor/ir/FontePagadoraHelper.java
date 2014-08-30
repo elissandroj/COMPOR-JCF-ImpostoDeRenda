@@ -25,7 +25,7 @@ public class FontePagadoraHelper {
 
 	static void verificaCriacaoFontes(FachadaExperimento fachada, Titular titular, FontePagadora... fontes) {
 		for (FontePagadora fonte : fontes) {
-			fachada.criarFontePagadora(titular, fonte);
+				fachada.criarFontePagadora(titular, fonte);
 		}
 	
 		List<FontePagadora> fontesSalvas = fachada.listarFontes(titular);

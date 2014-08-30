@@ -1,7 +1,9 @@
 package br.ufcg.ppgcc.compor.ir.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.ufcg.ppgcc.compor.ir.ExcecaoImpostoDeRenda;
 import br.ufcg.ppgcc.compor.ir.FachadaExperimento;
@@ -11,6 +13,8 @@ import br.ufcg.ppgcc.compor.ir.Titular;
 public class ImpostoDeRenda implements FachadaExperimento {
 
 	private List<Titular> titulares = new ArrayList<Titular>();
+	private List<FontePagadora> fontes = new ArrayList<FontePagadora>();
+	private Map<Titular,List<FontePagadora>> mapaFontes = new HashMap<Titular,List<FontePagadora>>();
 	
 	public void criarNovoTitular(Titular titular) throws ExcecaoImpostoDeRenda {
 		if (titular.getNome() == null) {
@@ -30,20 +34,27 @@ public class ImpostoDeRenda implements FachadaExperimento {
 		}	
 		
 		titulares.add(titular);
+		mapaFontes.put(titular, new ArrayList<FontePagadora>());	
 	}
 
 	public List<Titular> listarTitulares() {
 		return titulares;
 	}
 
-	public void criarFontePagadora(Titular titular, FontePagadora fonte) {
-		// TODO Auto-generated method stub
+	public void criarFontePagadora(Titular titular, FontePagadora 	fonte)  throws ExcecaoImpostoDeRenda {
+		List<FontePagadora> fontesDoTitular = mapaFontes.get(titular);
+		if (fontesDoTitular == null) {
+			throw new ExcecaoImpostoDeRenda("Titular não cadastrado");
+		}
 		
+		fontesDoTitular.add(fonte);
 	}
 
 	public List<FontePagadora> listarFontes(Titular titular) {
-		// TODO Auto-generated method stub
-		return null;
+		return mapaFontes.get(titular);
+		
 	}
+	
+	
 	
 }
