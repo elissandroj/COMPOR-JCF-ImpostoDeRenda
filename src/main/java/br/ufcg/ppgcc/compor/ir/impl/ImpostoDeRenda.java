@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.ufcg.ppgcc.compor.ir.Dependente;
 import br.ufcg.ppgcc.compor.ir.ExcecaoImpostoDeRenda;
 import br.ufcg.ppgcc.compor.ir.FachadaExperimento;
 import br.ufcg.ppgcc.compor.ir.FontePagadora;
@@ -42,6 +43,22 @@ public class ImpostoDeRenda implements FachadaExperimento {
 	}
 
 	public void criarFontePagadora(Titular titular, FontePagadora 	fonte)  throws ExcecaoImpostoDeRenda {
+		if(fonte.getNome() == null){
+			throw new ExcecaoImpostoDeRenda("O campo nome é obrigatório");
+		}
+		if(fonte.getCpfCnpj() == null){
+			throw new ExcecaoImpostoDeRenda("O campo CPF/CNPJ é obrigatório");
+		}
+		if(fonte.getRendimentoRecebidos() == 0){
+			throw new ExcecaoImpostoDeRenda("O campo rendimentos recebidos é obrigatório");
+		}
+		if(fonte.getRendimentoRecebidos() < 0){
+			throw new ExcecaoImpostoDeRenda("O campo rendimentos recebidos deve ser maior que zero");
+		}
+		
+		if((fonte.getCpfCnpj().length() != 11) && (fonte.getCpfCnpj().length() != 18)) {
+			throw new ExcecaoImpostoDeRenda("O campo CPF/CNPJ é inválido");
+		}
 		List<FontePagadora> fontesDoTitular = mapaFontes.get(titular);
 		if (fontesDoTitular == null) {
 			throw new ExcecaoImpostoDeRenda("Titular não cadastrado");
@@ -54,7 +71,23 @@ public class ImpostoDeRenda implements FachadaExperimento {
 		return mapaFontes.get(titular);
 		
 	}
-	
-	
+
+	public void criarDependente(Titular titular, Dependente dependente) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List<Dependente> listarDependentes(Titular titular) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<FontePagadora> getFontes() {
+		return fontes;
+	}
+
+	public void setFontes(List<FontePagadora> fontes) {
+		this.fontes = fontes;
+	}
 	
 }
